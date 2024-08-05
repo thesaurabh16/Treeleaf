@@ -1,0 +1,21 @@
+This is my crud app where i have created one form that contains the details of a person which have:
+person name 
+email
+date of birth
+phone number 
+address:-city,district,province,country :-fetched from the api which has been given
+profile pic:-only png format
+
+All these data while submitting should be stored in table format and which contains action button of edit and delete 
+and there is go to profile section where you can see the all the from filled in that profile section which doesnot have
+any action button only the details of the form submitted.
+
+
+***********How to run this project********************** 
+step1:-Download the zip file or clone it from github 
+step2:- open the code in any editor 
+step3:-open the terminal of editor 
+step4:- in terminal run these command cd crud-app
+step5:- enter the command npm start 
+now by entering npm start it will redirect to the localhost:3000 where project is been created and able to see the desired 
+output of the code.

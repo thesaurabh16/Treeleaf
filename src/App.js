@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import FormComponent from './components/FormComponent';
+import TableComponent from './components/TableComponent';
+import ProfilePage from './components/ProfilePage';
 
-function App() {
+const App = () => {
+  const [users, setUsers] = useState(() => {
+    const savedUsers = localStorage.getItem('users');
+    return savedUsers ? JSON.parse(savedUsers) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('users', JSON.stringify(users));
+  }, [users]);
+
+  const addUser = (user) => {
+    setUsers([...users, user]);
+  };
+
+  const deleteUser = (index) => {
+    const newUsers = users.filter((_, i) => i !== index);
+    setUsers(newUsers);
+  };
+
+  const editUser = (index, updatedUser) => {
+    const newUsers = users.map((user, i) => (i === index ? updatedUser : user));
+    setUsers(newUsers);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Routes>
+          <Route path="/" element={
+            <>
+              <FormComponent addUser={addUser} />
+              <TableComponent users={users} deleteUser={deleteUser} editUser={editUser} />
+              <Link to="/profiles">
+                <button>Go to Profiles</button>
+              </Link>
+            </>
+          } />
+          <Route path="/profiles" element={<ProfilePage users={users} />} />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
